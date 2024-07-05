@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+<div class="row justify-content-center">
+<div class="col-6">
+<h2 class="mb-4">Rergistro</h2>
+<form id="loginForm">
+<div class="mb-3">
+<label for="email" class="form-label">Nombre de Paciente:</label>
+<input type="text" class="form-control" id="email" name="username" required>
+</div>
+<div class="mb-3">
+<label for="password" class="form-label">Contraseña:</label>
+<input type="password" class="form-control" id="password" name="password" required>
+</div>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+document.getElementById('loginForm').addEventListener('submit', function(event) {
+event.preventDefault();
+const formData = new FormData(this);
+axios.post('http://localhost:8075/api/auth/clients/register', {
+user_nombre: formData.get('username'),
+user_contraseña: formData.get('password')
+})
+.then(function (response) {
+console.log(response.data);
+if (response.data.redirectTo) {
+    window.location.href = response.data.redirectTo;
+  }
+// Aquí puedes manejar la respuesta de la API, por ejemplo redireccionar a otra página
+})
+.catch(function (error) {
+console.error(error);
+
+// Aquí puedes manejar los errores, como mostrar un mensaje al usuario
+
+
+
+});
+});
+</script>
+
+</body>
+</html>
